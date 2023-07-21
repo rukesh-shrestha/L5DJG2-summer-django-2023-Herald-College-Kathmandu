@@ -1,1 +1,8 @@
 <h1>This is templates</h1>
+
+{%if blogs%}
+    {%for blog in blogs %}
+    <h2>{{blog.title}}</h2>
+    <h5>{{blog.description}}</h5>
+    {%endfor%}
+{%endif%}
