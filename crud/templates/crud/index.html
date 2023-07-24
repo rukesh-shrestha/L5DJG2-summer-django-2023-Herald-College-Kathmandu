@@ -1,8 +1,21 @@
 <h1>This is templates</h1>
 
+<!-- paticular blog -->
+{%if blog%}
+<h2>{{blog.title}}</h2>
+    <h5>{{blog.description}}</h5>
+    <button type="submit">Delete</button>
+{%endif%}
+
+
+<!-- all blog -->
 {%if blogs%}
     {%for blog in blogs %}
-    <h2>{{blog.title}}</h2>
+    
+    <a href="{%url 'particular' blog.id%}">
+        <h2>{{blog.title}}</h2>
+    </a>
+    
     <h5>{{blog.description}}</h5>
     {%endfor%}
 {%endif%}
