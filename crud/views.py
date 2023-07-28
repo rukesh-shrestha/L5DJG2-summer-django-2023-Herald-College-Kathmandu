@@ -18,9 +18,9 @@ def create(request):
 
     if(forms.is_valid()):
         forms.save()
-        return redirect("home")
+        return redirect("crud:home")
 
-    return render(request,"crud/create.html",{"forms":forms})
+    return render(request,"crud/creates.html",{"forms":forms})
 
 
 
@@ -37,4 +37,20 @@ def contacts(request):
         cont =Contact.create(name,message,email)
         cont.save()
         
-    return render(request,"crud/contacts.html")
+    return render(request,"crud/contact.html")
+
+def deleteData(request,id):
+    blog=Blog.objects.get(id=id)
+    blog.delete()
+    return redirect("crud:home")
+
+def updateData(request,id):
+    blog=Blog.objects.get(id=id)
+    forms=BlogForm(request.POST or None,instance=blog)
+
+    if forms.is_valid():
+        forms.save()
+        return redirect("crud:home")
+
+    return render(request,"crud/create.html",{"forms":forms})
+   
