@@ -6,12 +6,20 @@ from .forms import BlogForm
 # Create your views here.
 def homepage(request):
     blog=Blog.objects.all()
+    data = request.GET.get("search")
+    if(data is not "" and data is not None ):
+        searchData=Blog.objects.filter(title__contains=data)
+        print(searchData)
+        return render(request,"crud/index.html",{"blog":searchData})
+
+         
+
     return render(request,"crud/index.html",{"blogs":blog})
 
 def particularData(request,id):
     blog=Blog.objects.get(id=id)
     context ={"blog":blog}
-    return render(request,"crud/index.html",context)
+    return render(request,"crud/post.html",context)
 
 def create(request):
     forms = BlogForm(request.POST or None)
@@ -47,10 +55,15 @@ def deleteData(request,id):
 def updateData(request,id):
     blog=Blog.objects.get(id=id)
     forms=BlogForm(request.POST or None,instance=blog)
-
+    context = {
+        "forms":forms,
+        "title":blog.title,
+        "subtitle":blog.subtitle,
+        "description":blog.description
+    }
     if forms.is_valid():
         forms.save()
         return redirect("crud:home")
 
-    return render(request,"crud/create.html",{"forms":forms})
+    return render(request,"crud/creates.html",context)
    
