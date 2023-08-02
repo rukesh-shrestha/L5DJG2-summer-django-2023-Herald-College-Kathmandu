@@ -1,6 +1,10 @@
 from django.shortcuts import render,redirect
 from .models import Blog,Contact #manager->objects
 from django.core.paginator import Paginator
+from myproject.settings import EMAIL_HOST_USER #replace root with your project name
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+
 
 from .forms import BlogForm
 
@@ -44,13 +48,19 @@ def contacts(request):
         name=request.POST.get("name")
         email=request.POST.get("email")
         message=request.POST.get("message")
-        # cont = Contact(           
-        #     name=name,
-        #     email=email,
-        #     message=message
-        # )
+        subject = "Wants to Collaborate!!!"
+        recipient = "someone@yopmail.com",
+       
         cont =Contact.create(name,message,email)
         cont.save()
+        template = render_to_string('crud/email.html',{'name':name,'description':message,'mail':email})
+        email=EmailMessage(subject,template,EMAIL_HOST_USER,recipient)
+
+
+        email.fail_silently=False
+        if email!=None:
+            email.send()
+
         
     return render(request,"crud/contact.html")
 
