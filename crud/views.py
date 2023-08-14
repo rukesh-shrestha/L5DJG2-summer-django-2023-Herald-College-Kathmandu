@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from myproject.settings import EMAIL_HOST_USER #replace root with your project name
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
 
 
 from .forms import BlogForm
@@ -32,8 +33,10 @@ def particularData(request,id):
     context ={"blog":blog}
     return render(request,"crud/post.html",context)
 
+@login_required
 def create(request):
     forms = BlogForm(request.POST or None)
+    print(forms)
 
     if(forms.is_valid()):
         forms.save()
