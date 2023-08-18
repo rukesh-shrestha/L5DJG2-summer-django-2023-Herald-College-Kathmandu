@@ -1,4 +1,4 @@
-# L5DJG1 - summer-django - 2023 - Herald College Kathmandu 
+# L5DJG2 - summer-django - 2023 - Herald College Kathmandu 
 To download and use this project. Follow the below mention steps. 
 
 ## Clone the project
