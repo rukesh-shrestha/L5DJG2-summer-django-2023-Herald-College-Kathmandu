@@ -36,7 +36,7 @@ def particularData(request,id):
 @login_required
 def create(request):
     forms = BlogForm(request.POST or None)
-    print(forms)
+   
 
     if(forms.is_valid()):
         forms.save()
